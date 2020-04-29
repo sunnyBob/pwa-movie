@@ -1,0 +1,22 @@
+{
+  "name": "PWA - MOVIE",
+  "short_name": "movie",
+  "start_url": "/",
+  "background_color": "green",
+  "theme_color": "green",
+  "description": "A simply pwa demo",
+  "icons": [{
+    "src": "/images/icon-128.png",
+    "type": "image/png",
+    "sizes": "128x128"
+  }, {
+    "src": "/images/icon-144.png",
+    "type": "image/png",
+    "sizes": "144x144"
+  }, {
+    "src": "/images/icon-256.png",
+    "type": "image/png",
+    "sizes": "256x256"
+  }],
+  "display": "standalone"
+}

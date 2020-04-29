@@ -1,0 +1,80 @@
+:root {
+  --font_family: 'Open Sans', Helvetica, Arial, sans-serif;
+  --smoke: whitesmoke;
+  --card-padding: .75rem;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--smoke);
+  font-family: var(--font-family);
+}
+
+@media (min-width: 1012px) {
+  .p-responsive {
+    padding-right: 16px!important;
+    padding-left: 16px!important;
+  }
+}
+
+@media (min-width: 544px) {
+  .p-responsive {
+    padding-right: 40px!important;
+    padding-left: 40px!important;
+  }
+}
+
+
+.p-responsive {
+  padding-right: 16px!important;
+  padding-left: 16px!important;
+}
+
+.btn-filter {
+  margin-bottom: 20px;
+  padding: var(--card-padding);
+  border-bottom: 1px solid #d1d5da;
+}
+
+.container-fluid {
+  max-width: 1012px;
+  padding: var(--card-padding);
+  border: 1px solid #d1d5da;
+}
+
+.card-deck {
+  display: grid;
+  justify-content: center;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 300px));
+}
+
+.card-deck img {
+  height: 400px;
+}
+
+.card-title {
+  margin-bottom: 0;
+}
+
+.card-footer-badge {
+  font-size: 1rem;
+}
+
+.star-rate {
+  position: absolute;
+  overflow: hidden;
+  right: var(--card-padding);
+  top: var(--card-padding);
+}
+
+.fa-star-o {
+  padding: 1px;
+  color: yellow;
+}
+
+.card-body {
+  position: relative;
+  padding: var(--card-padding)
+}

@@ -1,0 +1,21 @@
+{
+  "name": "pwa-news",
+  "version": "1.0.0",
+  "description": "a pwa demo",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "PWA"
+  ],
+  "author": "sunnyBob@github.com",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.9.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-router": "^8.0.0-alpha.1",
+    "koa-static": "^3.0.0",
+    "node-fetch": "^2.6.0"
+  }
+}

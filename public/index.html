@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="never">
+  <title>PWA MOVIES DEMO</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/style/movie.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+</head>
+<body>
+  <div class="container-fluid p-responsive">
+    <div class="btn-filter">
+      <button data-type="new" type="button" class="btn btn-success new">最新</button>
+      <button data-type="highScore" type="button" class="btn high-score">高分</button>
+    </div>
+    <div class="d-flex flex-row">
+      <div class="col-sm-12">
+        <div class="card-deck">
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/js/main.js"></script>
+  <script src="js/registerSw.js"></script>
+</body>
+</html>
