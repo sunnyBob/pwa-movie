@@ -1,72 +1,81 @@
 const CACHE_VERSION = 'cache_v1'
-
-const cacheURL = [
+const cacheURL= [
   '/',
-  '/manifest.json',
-  '/favicon.ico ',
   '/images/icon-128.png',
   '/images/icon-144.png',
   '/images/icon-256.png',
   '/js/main.js',
-  '/js/registerSw.js',
-  '/style/movie.css ',
+  '/favicon.ico',
+  '/manifest.json',
+  '/style/movie.css',
 ]
 
 async function installFunc() {
-  console.log('installing...')
-  const cache  = await caches.open(CACHE_VERSION)
+  console.log('install')
+
+  const cache = await caches.open(CACHE_VERSION)
   await cache.addAll(cacheURL)
-  await self.skipWaiting() // 跳过等待旧 sw 控制的所有页面都关闭了才 activate
+
+  await skipWaiting()
 }
 
 async function activateFunc() {
-  console.log('activating...')
-  const cached = await caches.keys()
-  cached.forEach(cache => {
-    cache !== CACHE_VERSION && caches.delete(cache)
-  })
-  await self.clients.claim() // 立即取得页面控制权
+  console.log('activate')
+
+  const keys = await caches.keys()
+  await Promise.all(keys.map(async key => {
+    if (key !== CACHE_VERSION) {
+      await caches.delete(key)
+    }
+  }))
+  await clients.claim()
 }
 
-async function fetchFunc(e) {
+function fetchFunc(e) {
   const req = e.request
   const url = new URL(req.url)
 
   if (url.origin !== location.origin) return
 
+  const strategy = new Strategy()
+
   if (url.pathname.startsWith('/api')) {
-    e.respondWith(networkFirst(req))
+    e.respondWith(strategy.networkFirst(req))
   } else {
-    e.respondWith(cacheFirst(req))
+    e.respondWith(strategy.cacheFirst(req))
   }
 }
 
-async function cacheFirst(req) {
-  console.log('cacheFirst')
-  console.log(req)
-  const cached = await caches.match(req)
-
-  if (cached) return cached
-
-  const cloneReq = req.clone()
-  const res = await fetch(cloneReq)
-  const cache = await caches.open(CACHE_VERSION)
-
-  if (cache) cache.put(req, res)
-
-  return res
-}
-
-async function networkFirst(req) {
-  console.log('networkFirst')
-  try {
-    const res = await fetch(req)
-    const cache = await caches.open(CACHE_VERSION)
-    if (cache) cache.put(req, res.clone())
-    return res
-  } catch (e) {
+function Strategy() {
+  this.cacheFirst = async function(req) {
     const cached = await caches.match(req)
-    return cached
+
+    if (cached) return cached
+
+    const res = await fetch(req)
+
+    if (res.status !== 200) return res
+
+    const cache = await caches.open(CACHE_VERSION)
+
+    await cache.put(req, res.clone())
+    return res
+  }
+
+  this.networkFirst = async function(req) {
+    try {
+      const res = await fetch(req)
+
+      if (res.status !== 200) return res
+
+      const cache = await caches.open(CACHE_VERSION)
+
+      await cache.put(req, res.clone())
+      return res
+    } catch(e) {
+      const cached = await caches.match(req)
+      if (cached) return cached
+    }
   }
 }
 
